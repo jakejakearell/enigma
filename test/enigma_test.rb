@@ -13,7 +13,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_returns_today_as_useable_date
-    assert_equal "011421", @enigma.todays_date
+    assert_equal "140121", @enigma.todays_date
   end
 
   def test_enigma_can_make_a_key
@@ -24,6 +24,11 @@ class EnigmaTest < Minitest::Test
     assert_equal 5, @enigma.key_generator.length
     assert_instance_of Integer, @enigma.key_generator[0].to_i
     assert_equal String, @enigma.key_generator.class
+  end
+
+  def test_if_provided_date_it_is_useable
+    user_date = 1
+
   end
 
 end

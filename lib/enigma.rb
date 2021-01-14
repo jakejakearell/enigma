@@ -6,7 +6,7 @@ class Enigma
   end
 
   def todays_date
-    Time.new.strftime("%m/%d/%y").delete("/")
+    Time.new.strftime("%d/%m/%y").delete("/")
   end
 
   def key_generator
@@ -16,6 +16,10 @@ class Enigma
       key += characters.sample
     end
     key
+  end
+
+  def date_checker(date)
+    new_date = Time.parse(date.to_s)
   end
 
 end
