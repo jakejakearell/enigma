@@ -17,9 +17,13 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_enigma_can_make_a_key
-    assert_equal 5, @enigma.key.length
-    assert_instance_of Integer, @enigma.key[0].to_i
-    assert_instance_of String, @enigma.key.class
+    key_1 = @enigma.key_generator
+    key_2 = @enigma.key_generator
+
+    assert_equal true, key_1 != key_2
+    assert_equal 5, @enigma.key_generator.length
+    assert_instance_of Integer, @enigma.key_generator[0].to_i
+    assert_equal String, @enigma.key_generator.class
   end
 
 end
