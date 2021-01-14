@@ -27,8 +27,8 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_if_provided_date_it_is_useable
-    user_date = 1
-
+    user_date =
+    assert_equal "021192", @enigma.date_formatter("11/02/92")
   end
 
 end
