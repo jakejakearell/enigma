@@ -30,4 +30,12 @@ class EnigmaTest < Minitest::Test
     assert_equal "021192", @enigma.date_formatter("2-11-92")
   end
 
+  def test_encrypt_arguments
+    values = @enigma.encrypt("Test String")
+    assert_equal "140121", values[:date]
+    assert_equal "Test String",  values[:encryption]
+    assert_equal 5, values[:key].length
+
+  end
+
 end
