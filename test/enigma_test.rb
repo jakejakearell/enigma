@@ -16,4 +16,10 @@ class EnigmaTest < Minitest::Test
     assert_equal "011421", @enigma.todays_date
   end
 
+  def test_enigma_can_make_a_key
+    assert_equal 5, @enigma.key.length
+    assert_instance_of Integer, @enigma.key[0].to_i
+    assert_instance_of String, @enigma.key.class
+  end
+
 end
