@@ -3,6 +3,7 @@ require 'time'
 class Enigma
 
   def initialize
+    @range_of_characters = ("a".."z").to_a << " "
   end
 
   def todays_date
@@ -66,4 +67,39 @@ class Enigma
     end
     results
   end
+
+  def encryption(arguement)
+    new_shifts = shifts("02715", "040895")
+    new_word = ''
+    count = 0
+
+    arguement.each_char do |char|
+      new_character = counter_method((char.ord) - 97, new_shifts[count])
+
+      if char.ord == 32
+        new_word += ' '
+      else
+        new_word += "#{@range_of_characters[new_character]}"
+      end
+
+      count += 1
+      if count > 3
+        count = 0
+      end
+
+    end
+    new_word
+  end
+
+  def counter_method(starting_place, shift)
+    until shift == 0
+      starting_place += 1
+      if starting_place == 27
+        starting_place = 0
+      end
+      shift -= 1
+    end
+    starting_place
+  end
+
 end
