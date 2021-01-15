@@ -34,4 +34,15 @@ class Enigma
     results = {:encryption => string, :date => date, :key => key}
   end
 
+  def offsets(date)
+    results = []
+    squared = date.to_i ** 2
+    results << squared.to_s[-4].to_i
+    results << squared.to_s[-3].to_i
+    results << squared.to_s[-2].to_i
+    results << squared.to_s[-1].to_i
+    results
+    #Surely there has to be a way to use iteration to solve this.
+  end
+
 end
