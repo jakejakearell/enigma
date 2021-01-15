@@ -56,12 +56,11 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_final_shift
-    @enigma.keys("02715")
-    @enigma.offsets("040895")
+    results = @enigma.shifts("02715", "040895")
 
-    assert_equal 3, @enigma.shifts[0]
-    assert_equal 27, @enigma.shifts[1]
-    assert_equal 73, @enigma.shifts[2]
-    assert_equal 20, @enigma.shifts[4]
+    assert_equal 3, results[0]
+    assert_equal 27, results[1]
+    assert_equal 73, results[2]
+    assert_equal 20, results[3]
   end
 end
