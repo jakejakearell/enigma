@@ -26,4 +26,12 @@ class Enigma
     formatted_date += new_date[:year].to_s
   end
 
+  def encrypt(string, date=nil, key=key_generator)
+    # I Think there is a more elegant way to do this. Circle back
+    if date.nil?
+      date = todays_date
+    end
+    results = {:encryption => string, :date => date, :key => key}
+  end
+
 end
