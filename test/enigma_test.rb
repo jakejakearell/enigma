@@ -1,7 +1,7 @@
 require 'time'
 require_relative './test_helper'
-
 require './lib/enigma'
+require 'mocha/minitest'
 
 class EnigmaTest < Minitest::Test
   def setup
@@ -35,7 +35,15 @@ class EnigmaTest < Minitest::Test
     assert_equal "140121", values[:date]
     assert_equal "Test String",  values[:encryption]
     assert_equal 5, values[:key].length
+  end
 
+  def test_offsets
+    results = @enigma.offsets("140121")
+
+    assert_equal 4, results[0]
+    assert_equal 6, results[1]
+    assert_equal 4, results[2]
+    assert_equal 1, results[3]
   end
 
 end
