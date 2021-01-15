@@ -63,7 +63,7 @@ class EnigmaTest < Minitest::Test
     assert_equal 73, results[2]
     assert_equal 20, results[3]
   end
-  
+
   def test_encrypting_strings
     assert_equal "keder ohulw",  @enigma.encryption("hello world")
   end
