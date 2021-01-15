@@ -45,4 +45,14 @@ class Enigma
     #Surely there has to be a way to use iteration to solve this.
   end
 
+  def keys(date)
+    results = []
+    results << (date[0] + date[1]).to_i
+    results << (date[1] + date[2]).to_i
+    results << (date[2] + date[3]).to_i
+    results << (date[3] + date[4]).to_i
+
+    results
+  end
+
 end
