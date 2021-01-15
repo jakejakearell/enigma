@@ -46,4 +46,13 @@ class EnigmaTest < Minitest::Test
     assert_equal 1, results[3]
   end
 
+  def test_keys
+    results = @enigma.keys("02715")
+    
+    assert_equal 2, results[0]
+    assert_equal 27, results[1]
+    assert_equal 71, results[2]
+    assert_equal 15, results[3]
+  end
+
 end
