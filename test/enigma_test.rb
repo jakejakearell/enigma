@@ -32,9 +32,9 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_encrypt_arguments
-    values = @enigma.encrypt("Test String")
+    values = @enigma.encrypt("Test String", "16/01/21", "10001")
     assert_equal "160121", values[:date]
-    assert_equal "Test String",  values[:encryption]
+    assert_equal "gkwv yxtwtk",  values[:encryption]
     assert_equal 5, values[:key].length
   end
 
@@ -57,7 +57,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_final_shift
-    results = @enigma.shifts("02715", "040895")
+    results = @enigma.make_shifts("02715", "040895")
 
     assert_equal 3, results[0]
     assert_equal 27, results[1]
@@ -66,6 +66,6 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_encrypting_strings
-    assert_equal "keder ohulw",  @enigma.encryption("hello world")
+    assert_equal "keder ohulw",  @enigma.encryption("hello world", "040895", "02715" )
   end
 end
