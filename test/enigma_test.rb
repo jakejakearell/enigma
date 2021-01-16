@@ -32,10 +32,10 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_encrypt_arguments
-    # values = @enigma.encrypt("Test String", "16/01/21", "10001")
-    # assert_equal "160121", values[:date]
-    # assert_equal "gkwv yxtwtk",  values[:encryption]
-    # assert_equal 5, values[:key].length
+    values = @enigma.encrypt("Test String", "16/01/21", "10001")
+    assert_equal "160121", values[:date]
+    assert_equal "gkwvnyxtwtk",  values[:encryption]
+    assert_equal 5, values[:key].length
   end
 
   def test_offsets
@@ -66,7 +66,7 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_encrypting_strings
-    assert_equal "keder ohulw!?..", @enigma.encryption("hello world!?..", "040895", "02715" )
+    assert_equal "keder ohulw!?..", @enigma.encryption("HELLO world!?..", "040895", "02715" )
     assert_equal "vjqtbeaweqihssi", @enigma.encryption("hello world end",  "291018", "08304")
   end
 end
