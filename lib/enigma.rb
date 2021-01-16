@@ -29,7 +29,8 @@ class Enigma
 
   def encrypt(string, date=todays_date, key=key_generator)
     date = date_formatter(date)
-    results = {:encryption => string, :date => date, :key => key}
+    encrypted_message = encryption(string, date, key)
+    results = {:encryption => encrypted_message, :date => date, :key => key}
   end
 
   def offsets(date)
@@ -43,17 +44,17 @@ class Enigma
     results
   end
 
-  def keys(date)
+  def keys(key)
     results = []
     counter = 0
     4.times do
-      results << (date[counter] + date[(counter +1)]).to_i
+      results << (key[counter] + key[(counter +1)]).to_i
       counter += 1
     end
     results
   end
 
-  def shifts(keys, dates)
+  def make_shifts(keys, dates)
     counter = 0
     results = []
     4.times do
@@ -63,17 +64,22 @@ class Enigma
     results
   end
 
-  def encryption(arguement)
-    new_shifts = shifts("02715", "040895")
+  def encryption(string, date, key)
+    string = string.downcase
+    shifts = make_shifts(key, date)
     new_word = ''
     count = 0
-    arguement.each_char do |char|
-      new_character = counter_method((char.ord) - 97, new_shifts[count])
+    string.each_char do |char|
       if char.ord == 32
-        new_word += ' '
+        new_character = counter_method(27, shifts[count])
+        new_word += "#{@range_of_characters[new_character]}"
+      elsif char.ord < 97 || char.ord > 122
+        new_word += char
       else
+        new_character = counter_method((char.ord) - 97, shifts[count])
         new_word += "#{@range_of_characters[new_character]}"
       end
+
       count += 1
       if count > 3
         count = 0
@@ -85,7 +91,7 @@ class Enigma
   def counter_method(starting_place, shift)
     until shift == 0
       starting_place += 1
-      if starting_place == 27
+      if starting_place >= 27
         starting_place = 0
       end
       shift -= 1
