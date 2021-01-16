@@ -73,10 +73,12 @@ class Enigma
       new_character = counter_method((char.ord) - 97, shifts[count])
       if char.ord == 32
         new_word += ' '
+      elsif char.ord < 97 || char.ord > 122
+        new_word += char
       else
         new_word += "#{@range_of_characters[new_character]}"
       end
-      
+
       count += 1
       if count > 3
         count = 0

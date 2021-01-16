@@ -66,6 +66,6 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_encrypting_strings
-    assert_equal "keder ohulw",  @enigma.encryption("hello world", "040895", "02715" )
+    assert_equal "keder ohulw!?..",  @enigma.encryption("hello world!?..", "040895", "02715" )
   end
 end
