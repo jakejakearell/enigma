@@ -83,18 +83,13 @@ class Enigma
   end
 
   def counter_method(starting_place, shift)
-
     until shift == 0
       starting_place += 1
-
       if starting_place == 27
         starting_place = 0
       end
-
       shift -= 1
     end
-
     starting_place
   end
-
 end
