@@ -7,7 +7,7 @@ class Enigma
   end
 
   def todays_date
-    Time.new.strftime("%d/%m/%y").delete("/")
+    Time.new.strftime("%d/%m/%y")
   end
 
   def key_generator
@@ -19,50 +19,45 @@ class Enigma
     key
   end
 
-  def date_formatter(arguement)
-    formatted_date = ''
-    new_date = Date._strptime(arguement.to_s, '%d-%m-%Y')
-    formatted_date += new_date[:mday].to_s.rjust 2 ,"0"
-    formatted_date += new_date[:mon].to_s.rjust 2 ,"0"
-    formatted_date += new_date[:year].to_s
+  def date_formatter(date)
+    date = date.gsub('/', '-')
+    new_date = Date._strptime(date.to_s, '%d-%m-%Y')
+    new_date.reduce('') do |memo, date|
+      memo += date[1].to_s.rjust 2 ,"0"
+    end
   end
 
-  def encrypt(string, date=nil, key=key_generator)
-    # I Think there is a more elegant way to do this. Circle back
-    if date.nil?
-      date = todays_date
-    end
+  def encrypt(string, date=todays_date, key=key_generator)
+    date = date_formatter(date)
     results = {:encryption => string, :date => date, :key => key}
   end
 
   def offsets(date)
+    counter = 4
     results = []
     squared = date.to_i ** 2
-    results << squared.to_s[-4].to_i
-    results << squared.to_s[-3].to_i
-    results << squared.to_s[-2].to_i
-    results << squared.to_s[-1].to_i
+    4.times do
+      results << squared.to_s[-(counter)].to_i
+      counter -= 1
+    end
     results
-    #Surely there has to be a way to use iteration to solve this.
   end
 
   def keys(date)
     results = []
-    results << (date[0] + date[1]).to_i
-    results << (date[1] + date[2]).to_i
-    results << (date[2] + date[3]).to_i
-    results << (date[3] + date[4]).to_i
-
+    counter = 0
+    4.times do
+      results << (date[counter] + date[(counter +1)]).to_i
+      counter += 1
+    end
     results
   end
 
   def shifts(keys, dates)
-    key_shift = keys(keys)
-    date_shift = offsets(dates)
     counter = 0
     results = []
     4.times do
-      results << (date_shift[counter] + key_shift[counter])
+      results << (offsets(dates)[counter] + keys(keys)[counter])
       counter += 1
     end
     results
@@ -72,21 +67,17 @@ class Enigma
     new_shifts = shifts("02715", "040895")
     new_word = ''
     count = 0
-
     arguement.each_char do |char|
       new_character = counter_method((char.ord) - 97, new_shifts[count])
-
       if char.ord == 32
         new_word += ' '
       else
         new_word += "#{@range_of_characters[new_character]}"
       end
-
       count += 1
       if count > 3
         count = 0
       end
-
     end
     new_word
   end
@@ -101,5 +92,4 @@ class Enigma
     end
     starting_place
   end
-
 end

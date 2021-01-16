@@ -13,7 +13,8 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_returns_today_as_useable_date
-    assert_equal "140121", @enigma.todays_date
+    date = @enigma.todays_date
+    assert_equal "160121", @enigma.date_formatter(date)
   end
 
   def test_enigma_can_make_a_key
@@ -32,7 +33,7 @@ class EnigmaTest < Minitest::Test
 
   def test_encrypt_arguments
     values = @enigma.encrypt("Test String")
-    assert_equal "140121", values[:date]
+    assert_equal "160121", values[:date]
     assert_equal "Test String",  values[:encryption]
     assert_equal 5, values[:key].length
   end
