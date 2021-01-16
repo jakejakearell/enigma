@@ -57,12 +57,10 @@ class Enigma
   end
 
   def shifts(keys, dates)
-    key_shift = keys(keys)
-    date_shift = offsets(dates)
     counter = 0
     results = []
     4.times do
-      results << (date_shift[counter] + key_shift[counter])
+      results << (offsets(dates)[counter] + keys(keys)[counter])
       counter += 1
     end
     results
