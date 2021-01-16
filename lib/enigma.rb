@@ -19,12 +19,12 @@ class Enigma
     key
   end
 
-  def date_formatter(arguement)
-    formatted_date = ''
-    new_date = Date._strptime(arguement.to_s, '%d-%m-%Y')
-    formatted_date += new_date[:mday].to_s.rjust 2 ,"0"
-    formatted_date += new_date[:mon].to_s.rjust 2 ,"0"
-    formatted_date += new_date[:year].to_s
+  def date_formatter(date)
+    date = date.gsub('/', '-')
+    new_date = Date._strptime(date.to_s, '%d-%m-%Y')
+    new_date.reduce('') do |memo, date|
+      memo += date[1].to_s.rjust 2 ,"0" 
+    end
   end
 
   def encrypt(string, date=nil, key=key_generator)
