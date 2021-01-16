@@ -7,7 +7,7 @@ class Enigma
   end
 
   def todays_date
-    Time.new.strftime("%d/%m/%y").delete("/")
+    Time.new.strftime("%d/%m/%y")
   end
 
   def key_generator
@@ -23,15 +23,12 @@ class Enigma
     date = date.gsub('/', '-')
     new_date = Date._strptime(date.to_s, '%d-%m-%Y')
     new_date.reduce('') do |memo, date|
-      memo += date[1].to_s.rjust 2 ,"0" 
+      memo += date[1].to_s.rjust 2 ,"0"
     end
   end
 
-  def encrypt(string, date=nil, key=key_generator)
-    # I Think there is a more elegant way to do this. Circle back
-    if date.nil?
-      date = todays_date
-    end
+  def encrypt(string, date=todays_date, key=key_generator)
+    date = date_formatter(date)
     results = {:encryption => string, :date => date, :key => key}
   end
 
@@ -70,33 +67,33 @@ class Enigma
     new_shifts = shifts("02715", "040895")
     new_word = ''
     count = 0
-
     arguement.each_char do |char|
       new_character = counter_method((char.ord) - 97, new_shifts[count])
-
       if char.ord == 32
         new_word += ' '
       else
         new_word += "#{@range_of_characters[new_character]}"
       end
-
       count += 1
       if count > 3
         count = 0
       end
-
     end
     new_word
   end
 
   def counter_method(starting_place, shift)
+
     until shift == 0
       starting_place += 1
+
       if starting_place == 27
         starting_place = 0
       end
+
       shift -= 1
     end
+
     starting_place
   end
 
