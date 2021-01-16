@@ -70,12 +70,13 @@ class Enigma
     new_word = ''
     count = 0
     string.each_char do |char|
-      new_character = counter_method((char.ord) - 97, shifts[count])
       if char.ord == 32
-        new_word += ' '
+        new_character = counter_method(27, shifts[count])
+        new_word += "#{@range_of_characters[new_character]}"
       elsif char.ord < 97 || char.ord > 122
         new_word += char
       else
+        new_character = counter_method((char.ord) - 97, shifts[count])
         new_word += "#{@range_of_characters[new_character]}"
       end
 
@@ -90,7 +91,7 @@ class Enigma
   def counter_method(starting_place, shift)
     until shift == 0
       starting_place += 1
-      if starting_place == 27
+      if starting_place >= 27
         starting_place = 0
       end
       shift -= 1
