@@ -36,14 +36,14 @@ class Enigma
   end
 
   def offsets(date)
+    counter = 4
     results = []
     squared = date.to_i ** 2
-    results << squared.to_s[-4].to_i
-    results << squared.to_s[-3].to_i
-    results << squared.to_s[-2].to_i
-    results << squared.to_s[-1].to_i
+    4.times do
+      results << squared.to_s[-(counter)].to_i
+      counter -= 1
+    end
     results
-    #Surely there has to be a way to use iteration to solve this.
   end
 
   def keys(date)
@@ -53,7 +53,6 @@ class Enigma
       results << (date[counter] + date[(counter +1)]).to_i
       counter += 1
     end
-    
     results
   end
 
