@@ -13,7 +13,8 @@ class EnigmaTest < Minitest::Test
   end
 
   def test_returns_today_as_useable_date
-    assert_equal "160121", @enigma.todays_date
+    date = @enigma.todays_date
+    assert_equal "160121", @enigma.date_formatter(date)
   end
 
   def test_enigma_can_make_a_key
