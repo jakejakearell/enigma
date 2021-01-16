@@ -48,11 +48,12 @@ class Enigma
 
   def keys(date)
     results = []
-    results << (date[0] + date[1]).to_i
-    results << (date[1] + date[2]).to_i
-    results << (date[2] + date[3]).to_i
-    results << (date[3] + date[4]).to_i
-
+    counter = 0
+    4.times do
+      results << (date[counter] + date[(counter +1)]).to_i
+      counter += 1
+    end
+    
     results
   end
 
