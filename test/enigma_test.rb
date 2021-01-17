@@ -68,5 +68,16 @@ class EnigmaTest < Minitest::Test
   def test_encrypting_strings
     assert_equal "keder ohulw!?..", @enigma.encryption("HELLO world!?..", "040895", "02715" )
     assert_equal "vjqtbeaweqihssi", @enigma.encryption("hello world end",  "291018", "08304")
+    assert_equal "ptchvtall,eqnfymnfetbyeieklov", @enigma.encryption("Boy HOwdy, I ate a lot arfggh",  "291018", "08304")
+    assert_equal "ofmyo", @enigma.encryption("AAAAA",  "291018", "08374")
   end
+
+  def test_decrypt_strings
+    assert_equal "hello world!?..", @enigma.decrypt("keder ohulw!?..", "040895", "02715" )
+    assert_equal "hello world end", @enigma.decrypt("vjqtbeaweqihssi",  "291018", "08304")
+    assert_equal "boy howdy, i ate a lot arfggh", @enigma.decrypt("ptchvtall,eqnfymnfetbyeieklov",  "291018", "08304")
+    assert_equal "aaaaaaaa", @enigma.decrypt("ofmyofmy",  "291018", "08374")
+  end
+
+
 end
