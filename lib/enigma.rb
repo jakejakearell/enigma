@@ -51,13 +51,11 @@ class Enigma
   end
 
   def make_shifts(keys, dates)
-    counter = 0
-    results = []
-    4.times do
-      results << (offsets(dates)[counter] + keys(keys)[counter])
-      counter += 1
+    keys = keys(keys)
+    offsets = offsets(dates)
+    results = keys.map.with_index do |key, index|
+      key + offsets[index]
     end
-    results
   end
 
   def encryption(string, date, key)
