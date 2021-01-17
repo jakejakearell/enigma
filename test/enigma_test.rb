@@ -69,4 +69,10 @@ class EnigmaTest < Minitest::Test
     assert_equal "keder ohulw!?..", @enigma.encryption("HELLO world!?..", "040895", "02715" )
     assert_equal "vjqtbeaweqihssi", @enigma.encryption("hello world end",  "291018", "08304")
   end
+
+  def test_encrypting_strings
+    assert_equal "hello world!?..", @enigma.decrypt("keder ohulw!?..", "040895", "02715" )
+    assert_equal "hello world end", @enigma.decrypt("vjqtbeaweqihssi",  "291018", "08304")
+  end
+
 end
