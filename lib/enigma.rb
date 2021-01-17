@@ -34,14 +34,10 @@ class Enigma
   end
 
   def offsets(date)
-    counter = 4
-    results = []
-    squared = date.to_i ** 2
-    4.times do
-      results << squared.to_s[-(counter)].to_i
-      counter -= 1
+    squared = (date.to_i ** 2).to_s[-4..-1].split("")
+    results = squared.map do |number|
+      number.to_i
     end
-    results
   end
 
   def keys(key)
@@ -55,13 +51,11 @@ class Enigma
   end
 
   def make_shifts(keys, dates)
-    counter = 0
-    results = []
-    4.times do
-      results << (offsets(dates)[counter] + keys(keys)[counter])
-      counter += 1
+    keys = keys(keys)
+    offsets = offsets(dates)
+    results = keys.map.with_index do |key, index|
+      key + offsets[index]
     end
-    results
   end
 
   def encryption(string, date, key)
@@ -70,21 +64,25 @@ class Enigma
     new_word = ''
     count = 0
     string.each_char do |char|
-      if char.ord == 32
-        new_character = counter_method(27, shifts[count])
-        new_word += "#{@range_of_characters[new_character]}"
-      elsif char.ord < 97 || char.ord > 122
-        new_word += char
-      else
-        new_character = counter_method((char.ord) - 97, shifts[count])
-        new_word += "#{@range_of_characters[new_character]}"
-      end
+      new_word += encryption_character_checker(char, shifts[count])
       count += 1
       if count > 3
         count = 0
       end
     end
     new_word
+  end
+
+  def encryption_character_checker(char, shift)
+    if char.ord == 32
+      new_character = counter_method(27, shift)
+      "#{@range_of_characters[new_character]}"
+    elsif char.ord < 97 || char.ord > 122
+      char
+    else
+      new_character = counter_method((char.ord) - 97, shift)
+      "#{@range_of_characters[new_character]}"
+    end
   end
 
   def counter_method(starting_place, shift)
@@ -97,7 +95,6 @@ class Enigma
     end
     starting_place
   end
-
 
   def decrypt(message, date, key)
     shifts = make_shifts(key, date)
@@ -137,4 +134,5 @@ class Enigma
     end
     starting_place
   end
+
 end
