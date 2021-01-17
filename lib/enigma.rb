@@ -34,14 +34,10 @@ class Enigma
   end
 
   def offsets(date)
-    counter = 4
-    results = []
-    squared = date.to_i ** 2
-    4.times do
-      results << squared.to_s[-(counter)].to_i
-      counter -= 1
+    squared = (date.to_i ** 2).to_s[-4..-1].split("")
+    results = squared.map do |number|
+      number.to_i
     end
-    results
   end
 
   def keys(key)
