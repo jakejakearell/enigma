@@ -79,13 +79,11 @@ class Enigma
         new_character = counter_method((char.ord) - 97, shifts[count])
         new_word += "#{@range_of_characters[new_character]}"
       end
-
       count += 1
       if count > 3
         count = 0
       end
     end
-
     new_word
   end
 
@@ -107,7 +105,6 @@ class Enigma
     count = 0
     message.each_char do |char|
       if char.ord == 32
-        # require "pry"; binding.pry
         new_character = counter_subtraction(26, shifts[count])
         new_word += "#{@range_of_characters[new_character]}"
       elsif char.ord < 97 || char.ord > 122
@@ -116,21 +113,18 @@ class Enigma
         new_character = counter_subtraction((char.ord) - 97, shifts[count])
         new_word += "#{@range_of_characters[new_character]}"
       end
-
       count += 1
       if count > 3
         count = 0
       end
     end
     new_word
-
   end
 
   def counter_subtraction(starting_place, shift)
     if starting_place == 0
       shift += 1
     end
-
     until shift == 0
       starting_place -= 1
       if starting_place <= 0
@@ -138,11 +132,9 @@ class Enigma
       end
       shift -= 1
     end
-
     if starting_place == 27
       starting_place = 0
     end
-
     starting_place
   end
 end
