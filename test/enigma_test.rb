@@ -79,5 +79,4 @@ class EnigmaTest < Minitest::Test
     assert_equal "aaaaaaaa", @enigma.decrypt("ofmyofmy",  "291018", "08374")
   end
 
-
 end

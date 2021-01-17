@@ -134,4 +134,5 @@ class Enigma
     end
     starting_place
   end
+
 end
