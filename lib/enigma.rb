@@ -19,6 +19,14 @@ class Enigma
     key
   end
 
+  def check_date(date)
+    if !date.include?('/') && !date.include?('-')
+      date[0..5]
+    else
+      date_formatter(date)
+    end
+  end
+
   def date_formatter(date)
     date = date.gsub('/', '-')
     new_date = Date._strptime(date.to_s, '%d-%m-%Y')
@@ -27,12 +35,8 @@ class Enigma
     end
   end
 
-  def check_date(date)
-    if !date.include?('/') && !date.include?('-')
-      date[0..5]
-    else
-      date_formatter(date)
-    end
+  def check_file(file)
+    File.exists?("files/#{file}")
   end
 
   def offsets(date)
