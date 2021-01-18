@@ -1,18 +1,22 @@
 require_relative './enigma'
 
 class Encrypt < Enigma
+  attr_reader :info
 
-  # def initialize(message, key=key_generator, date=todays_date)
-  #   message = @message
-  #   @key = key
-  #   @date = date
-  # end
-
-  def encrypt(string, date=todays_date, key=key_generator)
+  def initialize(message, key=key_generator, date=todays_date)
     date = date_formatter(date)
-    encrypted_message = encryption(string, date, key)
-    results = {:encryption => encrypted_message, :date => date, :key => key}
+    @info = {:date => date,
+            :key => key,
+            :message => message
+            }
   end
+
+
+  # def encrypt(string, date=todays_date, key=key_generator)
+  #   date = date_formatter(date)
+  #   encrypted_message = encryption(string, date, key)
+  #   results = {:encryption => encrypted_message, :date => date, :key => key}
+  # end
 
   def encryption(string, date, key)
     string = string.downcase
