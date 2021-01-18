@@ -6,11 +6,11 @@ require 'mocha/minitest'
 
 class EncryptTest < Minitest::Test
   def setup
-    @enigma = Enigma.new
     @encrypt = Encrypt.new
   end
+
   def test_encrypt_arguments
-    values = @encrypt.encrypt("Test String", "16/01/21", "10001")
+    values = @encrypt.encrypt("Test String", "10001", "16/01/21")
     assert_equal "160121", values[:date]
     assert_equal "gkwvnyxtwtk",  values[:encryption]
     assert_equal 5, values[:key].length
