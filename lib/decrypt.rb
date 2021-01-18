@@ -2,29 +2,35 @@ require_relative './enigma'
 
 class Decrypt < Enigma
 
-  def decrypt(message, date, key)
+  def decrypt(message, key=key_generator, date=todays_date)
+    date = check_date(date)
+    encrypted_message = decryption(message, key, date)
+    results = {:decryption => encrypted_message, :date => date, :key => key}
+  end
+
+  def decryption(message, key, date)
     shifts = make_shifts(key, date)
-    new_word = ''
+    new_message = ''
     count = 0
     message.each_char do |char|
-      new_word += decryption_character_checker(char, shifts[count])
+      new_message += decryption_character_checker(char, shifts[count])
       count += 1
       if count > 3
         count = 0
       end
     end
-    new_word
+    new_message
   end
 
   def decryption_character_checker(char, shift)
     if char.ord == 32
       new_character = counter_subtraction(26, shift)
-      "#{@range_of_characters[new_character]}"
+      "#{range_of_characters[new_character]}"
     elsif char.ord < 97 || char.ord > 122
       char
     else
       new_character = counter_subtraction((char.ord) - 97, shift)
-      "#{@range_of_characters[new_character]}"
+      "#{range_of_characters[new_character]}"
     end
   end
 
