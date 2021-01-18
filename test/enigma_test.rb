@@ -8,8 +8,10 @@ class EnigmaTest < Minitest::Test
     @enigma = Enigma.new
   end
 
-  def test_it_has_exists
-    assert_instance_of Enigma, @enigma
+  def test_it_has_range_of_characters
+    assert_equal 27, @enigma.range_of_characters.length
+    assert_equal "a", @enigma.range_of_characters[0]
+    assert_equal " ", @enigma.range_of_characters[26]
   end
 
   def test_returns_today_as_useable_date
@@ -27,8 +29,14 @@ class EnigmaTest < Minitest::Test
     assert_equal String, @enigma.key_generator.class
   end
 
-  def test_if_provided_date_it_is_useable
+  def test_it_can_format_a_date
     assert_equal "021192", @enigma.date_formatter("2-11-92")
+  end
+
+  def test_it_will_return_a_useable_date
+    assert_equal "040895", @enigma.check_date("040895")
+    assert_equal "040895", @enigma.check_date("04-08-95")
+    assert_equal "040895", @enigma.check_date("04/08/95")
   end
 
   def test_offsets
