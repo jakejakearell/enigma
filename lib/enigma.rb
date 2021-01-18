@@ -27,12 +27,6 @@ class Enigma
     end
   end
 
-  def encrypt(string, date=todays_date, key=key_generator)
-    date = date_formatter(date)
-    encrypted_message = encryption(string, date, key)
-    results = {:encryption => encrypted_message, :date => date, :key => key}
-  end
-
   def offsets(date)
     squared = (date.to_i ** 2).to_s[-4..-1].split("")
     results = squared.map do |number|
@@ -58,84 +52,27 @@ class Enigma
     end
   end
 
-  def encryption(string, date, key)
-    string = string.downcase
-    shifts = make_shifts(key, date)
-    new_word = ''
-    count = 0
-    string.each_char do |char|
-      new_word += encryption_character_checker(char, shifts[count])
-      count += 1
-      if count > 3
-        count = 0
-      end
-    end
-    new_word
-  end
+  # def crack(message, date=todays_date)
+  #   end_characters = message[-4..-1].split("")
+  #   ordinal = end_characters.map do |character|
+  #     (character.ord) - 97
+  #   end
+  #
+  #   characters_assinger = message.length % 4
+  #
+  #   if characters_assinger % 4 == 0
+  #     characters = { :a => ordinal[0], :b => ordinal[1], :c => ordinal[2], :d => ordinal[3]}
+  #   elsif characters_assinger % 4 == 1
+  #     characters = { :a => ordinal[3], :b => ordinal[0], :c => ordinal[1], :d => ordinal[2]}
+  #   elsif characters_assinger % 4 == 2
+  #     characters= {:a => ordinal[2], :b => ordinal[3], :c => ordinal[0], :d => ordinal[1]}
+  #   else characters_assinger % 4 == 3
+  #     characters = {:a => (ordinal[1]), :b => ordinal[2], :c => ordinal[3], :d => ordinal[0]}
+  #   end
+  #   require "pry"; binding.pry
+  #
+  #   [26, 4, 13, 3]
+  #
+  # end
 
-  def encryption_character_checker(char, shift)
-    if char.ord == 32
-      new_character = counter_method(27, shift)
-      "#{@range_of_characters[new_character]}"
-    elsif char.ord < 97 || char.ord > 122
-      char
-    else
-      new_character = counter_method((char.ord) - 97, shift)
-      "#{@range_of_characters[new_character]}"
-    end
-  end
-
-  def counter_method(starting_place, shift)
-    until shift == 0
-      starting_place += 1
-      if starting_place >= 27
-        starting_place = 0
-      end
-      shift -= 1
-    end
-    starting_place
-  end
-
-  def decrypt(message, date, key)
-    shifts = make_shifts(key, date)
-    new_word = ''
-    count = 0
-    message.each_char do |char|
-      new_word += decryption_character_checker(char, shifts[count])
-      count += 1
-      if count > 3
-        count = 0
-      end
-    end
-    new_word
-  end
-
-  def decryption_character_checker(char, shift)
-    if char.ord == 32
-      new_character = counter_subtraction(26, shift)
-      "#{@range_of_characters[new_character]}"
-    elsif char.ord < 97 || char.ord > 122
-      char
-    else
-      new_character = counter_subtraction((char.ord) - 97, shift)
-      "#{@range_of_characters[new_character]}"
-    end
-  end
-
-  def counter_subtraction(starting_place, shift)
-    if starting_place == 0
-      shift += 1
-    end
-    until shift == 0
-      starting_place -= 1
-      if starting_place <= 0
-        starting_place = 27
-      end
-      shift -= 1
-    end
-    if starting_place == 27
-      starting_place = 0
-    end
-    starting_place
-  end
 end
