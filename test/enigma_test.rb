@@ -6,6 +6,8 @@ require 'mocha/minitest'
 class EnigmaTest < Minitest::Test
   def setup
     @enigma = Enigma.new
+    @file = mock
+    @file.stubs(:name).returns("test.txt")
   end
 
   def test_it_has_range_of_characters
@@ -19,9 +21,14 @@ class EnigmaTest < Minitest::Test
     assert_equal "180121", @enigma.date_formatter(date)
   end
 
-  def test_it_can_read_file
-    assert_equal true, @enigma.check_file(file)
-    assert_equal false, @enigma.check_file("file")
+  def test_is_message_a_file
+    assert_equal true, @enigma.check_file(@file.name)
+    assert_equal false, @enigma.check_file("big dogs")
+  end
+
+  def test_assesses_what_to_do_with_message
+    assert_equal String, @enigma.open_file(@file.name)
+    assert_equal String, @enigma.open_file("not a file")
   end
 
   def test_enigma_can_make_a_key
