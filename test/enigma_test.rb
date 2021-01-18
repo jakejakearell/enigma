@@ -79,4 +79,23 @@ class EnigmaTest < Minitest::Test
     assert_equal "aaaaaaaa", @enigma.decrypt("ofmyofmy",  "291018", "08374")
   end
 
+  def test_counter_method
+    assert_equal 0, @enigma.counter_method(26, 28)
+    assert_equal 1, @enigma.counter_method(2, 26)
+  end
+
+  def test_counter_subtraction
+    assert_equal 4, @enigma.counter_subtraction(26, 22)
+    assert_equal 23, @enigma.counter_subtraction(26, 30)
+  end
+
+  def test_encryption_character_checker
+    assert_equal "b", @enigma.encryption_character_checker("a", 28)
+    assert_equal "i", @enigma.encryption_character_checker("z", 10)
+  end
+
+  def test_decryption_character_checker
+    assert_equal "b", @enigma.decryption_character_checker("a", 26)
+    assert_equal "w", @enigma.decryption_character_checker("z", 30)
+  end
 end
