@@ -7,15 +7,21 @@ require 'mocha/minitest'
 
 class DecryptTest < Minitest::Test
   def setup
-    @enigma = Enigma.new
     @decrypt = Decrypt.new
   end
 
+  def test_decrypt_returns_hash
+    decryption = @decrypt.decrypt("gkwvnyxtwtk", "10001", "160121")
+    assert_equal "160121", decryption[:date]
+    assert_equal "test string",  decryption[:decryption]
+    assert_equal 5, decryption[:key].length
+  end
+
   def test_decrypt_strings
-    assert_equal "hello world!?..", @decrypt.decrypt("keder ohulw!?..", "040895", "02715" )
-    assert_equal "hello world end", @decrypt.decrypt("vjqtbeaweqihssi",  "291018", "08304")
-    assert_equal "boy howdy, i ate a lot arfggh", @decrypt.decrypt("ptchvtall,eqnfymnfetbyeieklov",  "291018", "08304")
-    assert_equal "aaaaaaaa", @decrypt.decrypt("ofmyofmy",  "291018", "08374")
+    assert_equal "hello world!?..", @decrypt.decryption("keder ohulw!?..", "02715", "040895" )
+    assert_equal "hello world end", @decrypt.decryption("vjqtbeaweqihssi", "08304", "291018",)
+    assert_equal "boy howdy, i ate a lot arfggh", @decrypt.decryption("ptchvtall,eqnfymnfetbyeieklov", "08304",  "291018")
+    assert_equal "aaaaaaaa", @decrypt.decryption("ofmyofmy", "08374", "291018")
   end
 
   def test_counter_subtraction
