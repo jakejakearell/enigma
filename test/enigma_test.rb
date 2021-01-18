@@ -98,4 +98,8 @@ class EnigmaTest < Minitest::Test
     assert_equal "b", @enigma.decryption_character_checker("a", 26)
     assert_equal "w", @enigma.decryption_character_checker("z", 30)
   end
+
+  def test_it_can_crack
+    assert_equal "hello world end", @enigma.crack("vjqtbeaweqihssi", "291018")
+  end
 end
