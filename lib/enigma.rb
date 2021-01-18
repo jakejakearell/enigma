@@ -123,18 +123,12 @@ class Enigma
   end
 
   def counter_subtraction(starting_place, shift)
-    if starting_place == 0
-      shift += 1
-    end
     until shift == 0
-      starting_place -= 1
       if starting_place <= 0
         starting_place = 27
       end
+      starting_place -= 1
       shift -= 1
-    end
-    if starting_place == 27
-      starting_place = 0
     end
     starting_place
   end
