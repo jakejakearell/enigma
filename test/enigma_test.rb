@@ -19,6 +19,11 @@ class EnigmaTest < Minitest::Test
     assert_equal "180121", @enigma.date_formatter(date)
   end
 
+  def test_it_can_read_file
+    assert_equal true, @enigma.check_file(file)
+    assert_equal false, @enigma.check_file("file")
+  end
+
   def test_enigma_can_make_a_key
     key_1 = @enigma.key_generator
     key_2 = @enigma.key_generator
