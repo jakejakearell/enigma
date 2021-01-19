@@ -19,7 +19,18 @@ class CrackingTest < Minitest::Test
     assert_equal 14, @cracking.shift_location("vjqtbeaweqihssi")[:a].abs
     assert_equal 5, @cracking.shift_location("vjqtbeaweqihssi")[:b].abs
     assert_equal 5, @cracking.shift_location("vjqtbeaweqihssi")[:c].abs
-    assert_equal 19, @cracking.shift_location("vjqtbeaweqihssi")[:d].abs
+    assert_equal 8, @cracking.shift_location("vjqtbeaweqihssi")[:d].abs
     assert_nil @cracking.shift_location("vjqtbeaweqihssi")[:e]
+  end
+
+  def test_it_assigns_shifts_to_based_on_message_length
+    assert_equal 27, @cracking.shift_location(" ham")[:a]
+    assert_equal 27, @cracking.shift_location("f ham")[:b]
+    assert_equal 27, @cracking.shift_location("lf ham")[:c]
+    assert_equal 27, @cracking.shift_location("klf ham")[:d]
+  end
+
+  def test_it_can_crack
+    assert_equal "hello world end", @cracking.crack("vjqtbeaweqihssi")
   end
 end
