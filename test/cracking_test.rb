@@ -16,11 +16,10 @@ class CrackingTest < Minitest::Test
   end
 
   def test_it_can_figure_out_the_location_of_shifts
-    assert_equal 18, @cracking.shift_location("vjqtbeaweqihssi")[:a]
-    assert_equal 18, @cracking.shift_location("vjqtbeaweqihssi")[:b]
-    assert_equal 8, @cracking.shift_location("vjqtbeaweqihssi")[:c]
-    assert_equal 7, @cracking.shift_location("vjqtbeaweqihssi")[:d]
+    assert_equal 14, @cracking.shift_location("vjqtbeaweqihssi")[:a].abs
+    assert_equal 5, @cracking.shift_location("vjqtbeaweqihssi")[:b].abs
+    assert_equal 5, @cracking.shift_location("vjqtbeaweqihssi")[:c].abs
+    assert_equal 19, @cracking.shift_location("vjqtbeaweqihssi")[:d].abs
     assert_nil @cracking.shift_location("vjqtbeaweqihssi")[:e]
-
   end
 end
