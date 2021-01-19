@@ -33,4 +33,8 @@ class CrackingTest < Minitest::Test
   def test_it_can_crack
     assert_equal "hello world end", @cracking.crack("vjqtbeaweqihssi")
   end
+
+  def test_it_can_have_keys
+    assert_equal "08304", @cracking.keys("vjqtbeaweqihssi", "291018")
+  end
 end
