@@ -1,30 +1,40 @@
-require_relative './enigma'
+require_relative './decrypt'
 
-class Cracking < Enigma
+class Cracking < Decrypt
 
-    def crack(message, date=todays_date)
+    def ordinal_values(message)
       end_characters = message[-4..-1].split("")
       ordinal = end_characters.map do |character|
-        (character.ord) - 97
+        if character.ord == 32
+            26
+        else
+          (character.ord) - 97
+        end
       end
-
-      characters_assinger = message.length % 4
-
-      if characters_assinger % 4 == 0
-        characters = { :a => ordinal[0], :b => ordinal[1], :c => ordinal[2], :d => ordinal[3]}
-      elsif characters_assinger % 4 == 1
-        characters = { :a => ordinal[3], :b => ordinal[0], :c => ordinal[1], :d => ordinal[2]}
-      elsif characters_assinger % 4 == 2
-        characters= {:a => ordinal[2], :b => ordinal[3], :c => ordinal[0], :d => ordinal[1]}
-      else characters_assinger % 4 == 3
-        characters = {:a => (ordinal[1]), :b => ordinal[2], :c => ordinal[3], :d => ordinal[0]}
-      end
-
-
-      # [26, 4, 13, 3]
-
     end
 
+    def shift_location(message)
+      ordinals = ordinal_values(message)
+      characters_assinger = message.length % 4
+      if characters_assinger % 4 == 0
+          { :a => (1+ordinals[0]), :b => (4-ordinals[1]), :c => (13-ordinals[2]), :d => (3-ordinals[3])}
+      elsif characters_assinger % 4 == 1
+         { :a => (3-ordinals[3]), :b => (1+ordinals[0]), :c => (4-ordinals[1]), :d => (13-ordinals[2])}
+      elsif characters_assinger % 4 == 2
+         {:a => (13-ordinals[2]), :b => (3-ordinals[3]), :c => (1+ordinals[0]), :d => (4-ordinals[1])}
+      else characters_assinger % 4 == 3
+         {:a => (4-ordinals[1]), :b => (13-ordinals[2]), :c => (3-ordinals[3]), :d => (1+ordinals[0])}
+      end
+    end
 
+    def crack(message)
+      message = message.downcase
+      shifts = shift_location(message).values.map {|value| value.abs}
+      new_message = ''
+      message.each_char do |char|
+        new_message += decryption_character_checker(char, shifts[new_message.length % 4])
+      end
+      new_message
+    end
 
 end
