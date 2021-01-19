@@ -6,19 +6,14 @@ class Decrypt < Enigma
     message = assess_message(message)
     date = check_date(date)
     encrypted_message = decryption(message, key, date)
-    results = {:decryption => encrypted_message, :date => date, :key => key}
+    {:decryption => encrypted_message, :date => date, :key => key}
   end
 
   def decryption(message, key, date)
     shifts = make_shifts(key, date)
     new_message = ''
-    count = 0
     message.each_char do |char|
-      new_message += decryption_character_checker(char, shifts[count])
-      count += 1
-      if count > 3
-        count = 0
-      end
+      new_message += decryption_character_checker(char, shifts[new_message.length % 4])
     end
     new_message
   end

@@ -6,20 +6,15 @@ class Encrypt < Enigma
     message = assess_message(message)
     date = check_date(date)
     encrypted_message = encryption(message, date, key)
-    results = {:encryption => encrypted_message, :date => date, :key => key}
+    {:encryption => encrypted_message, :date => date, :key => key}
   end
 
   def encryption(message, date, key)
     message = message.downcase
     shifts = make_shifts(key, date)
     new_message = ''
-    count = 0
     message.each_char do |char|
-      new_message += encryption_character_checker(char, shifts[count])
-      count += 1
-      if count > 3
-        count = 0
-      end
+      new_message += encryption_character_checker(char, shifts[new_message.length % 4])
     end
     new_message
   end
