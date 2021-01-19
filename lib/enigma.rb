@@ -53,10 +53,11 @@ class Enigma
 
   def keys(key)
     results = []
-    counter = 0
-    4.times do
-      results << (key[counter] + key[(counter +1)]).to_i
-      counter += 1
+    until results.length == 4
+      key.split("").reduce do |key, next_key|
+        results << (key + next_key).to_i
+      next_key
+      end
     end
     results
   end
