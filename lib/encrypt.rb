@@ -2,42 +2,37 @@ require_relative './enigma'
 
 class Encrypt < Enigma
 
-  # def initialize(message, key=key_generator, date=todays_date)
-  #   message = @message
-  #   @key = key
-  #   @date = date
-  # end
-
-  def encrypt(string, date=todays_date, key=key_generator)
-    date = date_formatter(date)
-    encrypted_message = encryption(string, date, key)
+  def encrypt(message, key=key_generator, date=todays_date)
+    message = assess_message(message)
+    date = check_date(date)
+    encrypted_message = encryption(message, date, key)
     results = {:encryption => encrypted_message, :date => date, :key => key}
   end
 
-  def encryption(string, date, key)
-    string = string.downcase
+  def encryption(message, date, key)
+    message = message.downcase
     shifts = make_shifts(key, date)
-    new_word = ''
+    new_message = ''
     count = 0
-    string.each_char do |char|
-      new_word += encryption_character_checker(char, shifts[count])
+    message.each_char do |char|
+      new_message += encryption_character_checker(char, shifts[count])
       count += 1
       if count > 3
         count = 0
       end
     end
-    new_word
+    new_message
   end
 
   def encryption_character_checker(char, shift)
     if char.ord == 32
       new_character = counter_method(27, shift)
-      "#{@range_of_characters[new_character]}"
+      "#{range_of_characters[new_character]}"
     elsif char.ord < 97 || char.ord > 122
       char
     else
       new_character = counter_method((char.ord) - 97, shift)
-      "#{@range_of_characters[new_character]}"
+      "#{range_of_characters[new_character]}"
     end
   end
 

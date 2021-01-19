@@ -2,8 +2,8 @@ require 'time'
 
 class Enigma
 
-  def initialize
-    @range_of_characters = ("a".."z").to_a << " "
+  def range_of_characters
+    ("a".."z").to_a << " "
   end
 
   def todays_date
@@ -19,11 +19,28 @@ class Enigma
     key
   end
 
+  def check_date(date)
+    if !date.include?('/') && !date.include?('-')
+      date[0..5]
+    else
+      date_formatter(date)
+    end
+  end
+
   def date_formatter(date)
     date = date.gsub('/', '-')
     new_date = Date._strptime(date.to_s, '%d-%m-%Y')
     new_date.reduce('') do |memo, date|
       memo += date[1].to_s.rjust 2 ,"0"
+    end
+  end
+
+  def assess_message(message)
+    if File.exist?("files/#{message}")
+      file = File.open("files/#{message}", "r")
+      message = file.read
+    else
+      message.to_s
     end
   end
 
