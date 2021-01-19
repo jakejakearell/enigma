@@ -35,8 +35,13 @@ class Enigma
     end
   end
 
-  def check_file(file)
-    File.exists?("files/#{file}")
+  def assess_message(message)
+    if File.exist?("files/#{message}")
+      file = File.open("files/#{message}", "r")
+      message = file.read
+    else
+      message.to_s
+    end
   end
 
   def offsets(date)
