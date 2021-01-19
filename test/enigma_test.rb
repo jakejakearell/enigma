@@ -21,14 +21,10 @@ class EnigmaTest < Minitest::Test
     assert_equal "180121", @enigma.date_formatter(date)
   end
 
-  def test_is_message_a_file
-    assert_equal true, @enigma.check_file(@file.name)
-    assert_equal false, @enigma.check_file("big dogs")
-  end
-
   def test_assesses_what_to_do_with_message
-    assert_equal String, @enigma.open_file(@file.name)
-    assert_equal String, @enigma.open_file("not a file")
+    assert_equal String, @enigma.assess_message(@file.name).class
+    assert_equal String, @enigma.assess_message("not a file").class
+    assert_equal String, @enigma.assess_message(12312).class
   end
 
   def test_enigma_can_make_a_key
