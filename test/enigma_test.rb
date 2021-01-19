@@ -73,9 +73,4 @@ class EnigmaTest < Minitest::Test
     assert_equal 73, results[2]
     assert_equal 20, results[3]
   end
-
-  # def test_it_can_crack
-  #   skip
-  #   assert_equal "hello world end", @enigma.crack("vjqtbeaweqihssi", "291018")
-  # end
 end
