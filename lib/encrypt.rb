@@ -13,13 +13,8 @@ class Encrypt < Enigma
     message = message.downcase
     shifts = make_shifts(key, date)
     new_message = ''
-    count = 0
     message.each_char do |char|
-      new_message += encryption_character_checker(char, shifts[count])
-      count += 1
-      if count > 3
-        count = 0
-      end
+      new_message += encryption_character_checker(char, shifts[new_message.length % 4])
     end
     new_message
   end
