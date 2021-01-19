@@ -18,7 +18,10 @@ class DecryptTest < Minitest::Test
   end
 
   def test_decrypt_strings
-    assert_equal "hello world!?..", @decrypt.decryption("keder ohulw!?..", "02715", "040895" )
+    info = mock
+    info.stubs(:encrypt).returns({:encryption => "keder ohulw!?..", :date => "040895", :key => "02715"})
+
+    assert_equal "hello world!?..", @decrypt.decryption(info.encrypt[:encryption], info.encrypt[:key], info.encrypt[:date] )
     assert_equal "hello world end", @decrypt.decryption("vjqtbeaweqihssi", "08304", "291018",)
     assert_equal "boy howdy, i ate a lot arfggh", @decrypt.decryption("ptchvtall,eqnfymnfetbyeieklov", "08304",  "291018")
     assert_equal "aaaaaaaa", @decrypt.decryption("ofmyofmy", "08374", "291018")
