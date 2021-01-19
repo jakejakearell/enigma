@@ -31,6 +31,11 @@ class CrackingTest < Minitest::Test
   end
 
   def test_it_can_crack
-    assert_equal "hello world end", @cracking.crack("vjqtbeaweqihssi")
+    assert_equal "hello world end", @cracking.cracking("vjqtbeaweqihssi")
+  end
+
+  def test_it_can_output_a_hash
+    assert_equal "hello world end", @cracking.crack("vjqtbeaweqihssi", "291018")[:decryption]
+    assert_equal "291018", @cracking.crack("vjqtbeaweqihssi", "291018")[:date]
   end
 end
