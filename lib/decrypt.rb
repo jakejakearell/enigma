@@ -6,7 +6,7 @@ class Decrypt < Enigma
     message = assess_message(message)
     date = check_date(date)
     encrypted_message = decryption(message, key, date)
-    results = {:decryption => encrypted_message, :date => date, :key => key}
+    {:decryption => encrypted_message, :date => date, :key => key}
   end
 
   def decryption(message, key, date)

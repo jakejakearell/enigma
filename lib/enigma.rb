@@ -30,8 +30,8 @@ class Enigma
   def date_formatter(date)
     date = date.gsub('/', '-')
     new_date = Date._strptime(date.to_s, '%d-%m-%Y')
-    new_date.reduce('') do |memo, date|
-      memo += date[1].to_s.rjust 2 ,"0"
+    new_date.reduce('') do |memo, date_portion|
+      memo += date_portion[1].to_s.rjust 2 ,"0"
     end
   end
 
@@ -46,7 +46,7 @@ class Enigma
 
   def offsets(date)
     squared = (date.to_i ** 2).to_s[-4..-1].split("")
-    results = squared.map do |number|
+    squared.map do |number|
       number.to_i
     end
   end
@@ -54,8 +54,8 @@ class Enigma
   def keys(key)
     results = []
     until results.length == 4
-      key.split("").reduce do |key, next_key|
-        results << (key + next_key).to_i
+      key.split("").reduce do |intial_key, next_key|
+        results << (intial_key + next_key).to_i
       next_key
       end
     end
@@ -65,7 +65,7 @@ class Enigma
   def make_shifts(keys, dates)
     keys = keys(keys)
     offsets = offsets(dates)
-    results = keys.map.with_index do |key, index|
+    keys.map.with_index do |key, index|
       key + offsets[index]
     end
   end
