@@ -2,18 +2,19 @@ require_relative './enigma'
 
 class Encrypt < Enigma
 
-  def encrypt(string, key=key_generator, date=todays_date)
+  def encrypt(message, key=key_generator, date=todays_date)
+    message = assess_message(message)
     date = check_date(date)
-    encrypted_message = encryption(string, date, key)
+    encrypted_message = encryption(message, date, key)
     results = {:encryption => encrypted_message, :date => date, :key => key}
   end
 
-  def encryption(string, date, key)
-    string = string.downcase
+  def encryption(message, date, key)
+    message = message.downcase
     shifts = make_shifts(key, date)
     new_message = ''
     count = 0
-    string.each_char do |char|
+    message.each_char do |char|
       new_message += encryption_character_checker(char, shifts[count])
       count += 1
       if count > 3

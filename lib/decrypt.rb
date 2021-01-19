@@ -3,6 +3,7 @@ require_relative './enigma'
 class Decrypt < Enigma
 
   def decrypt(message, key=key_generator, date=todays_date)
+    message = assess_message(message)
     date = check_date(date)
     encrypted_message = decryption(message, key, date)
     results = {:decryption => encrypted_message, :date => date, :key => key}
